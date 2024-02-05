@@ -1,10 +1,16 @@
 import { fastify } from "fastify";
+import fastifyCors from "fastify-cors";
+
 // import { DatabaseMemory } from "./database-memory.js";
 import { DatabasePostgres } from "./database-postgres.js";
 
 const server = fastify();
 // const database = new DatabaseMemory();
 const database = new DatabasePostgres();
+
+server.register(fastifyCors, {
+  origin: true,
+});
 
 server.post("/videos", async (request, reply) => {
   const { title, description, duration } = request.body;
